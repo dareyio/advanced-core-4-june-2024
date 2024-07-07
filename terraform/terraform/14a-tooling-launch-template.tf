@@ -70,7 +70,7 @@ resource "aws_launch_template" "tooling-launch-template" {
   image_id = "ami-0b0af3577fe5e3532"
   instance_initiated_shutdown_behavior = "terminate"
   instance_type = "t2.micro"
-  key_name = "devops"
+  key_name = "devops-advanced-class"
 
   monitoring {
     enabled = true

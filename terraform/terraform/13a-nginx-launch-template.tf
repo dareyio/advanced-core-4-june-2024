@@ -21,7 +21,7 @@ resource "aws_launch_template" "nginx-launch-template" {
 
   instance_type = "t2.micro"
 
-  key_name = "devops"
+  key_name = "devops-advanced-class"
 
 
   monitoring {

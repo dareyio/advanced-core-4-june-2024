@@ -38,7 +38,7 @@ resource "aws_lb_target_group" "nginx-tgt" {
   vpc_id      = aws_vpc.main.id
   health_check {
     interval            = 10
-    path                = "/healthstatus"
+    path                = "/"
     protocol            = "HTTP"
     timeout             = 5
     healthy_threshold   = 5
@@ -46,5 +46,14 @@ resource "aws_lb_target_group" "nginx-tgt" {
   }
 }
 
-
+# Create a new ALB Target Group attachment
+resource "aws_autoscaling_attachment" "nginx-alb-asg-attach" {
+  autoscaling_group_name = aws_autoscaling_group.nginx-asg.id
+  lb_target_group_arn    = aws_lb_target_group.nginx-tgt.arn
+  # Explicitly declare dependencies
+  depends_on = [
+    aws_lb_target_group.nginx-tgt,
+    aws_autoscaling_group.nginx-asg,
+  ]
+}
 

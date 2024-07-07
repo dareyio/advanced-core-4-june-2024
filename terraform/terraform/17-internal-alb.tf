@@ -84,7 +84,7 @@ resource "aws_lb_listener_rule" "tooling-listener" {
 
   condition {
     host_header {
-      values = ["tooling.darey.io"]
+      values = ["tooling.edoctorz.com"]
     }
   }
 }
@@ -103,7 +103,7 @@ resource "aws_lb_listener_rule" "wordpress-listener" {
 
   condition {
     host_header {
-      values = ["wordpress.darey.io"]
+      values = ["wordpress.edoctorz.com"]
     }
   }
 }
