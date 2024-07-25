@@ -19,6 +19,14 @@ resource "aws_security_group_rule" "inbound-bastion-ssh-to-tooling" {
 }
 
 
+resource "aws_security_group_rule" "allow_HTTP_from_nginx_to_tooling" {
+  type                     = "ingress"
+  from_port                = 80
+  to_port                  = 80
+  protocol                 = "tcp"
+  source_security_group_id = aws_security_group.nginx-sg.id
+  security_group_id        = aws_security_group.tooling-sg.id
+}
 
 resource "aws_security_group_rule" "allow_all_tooling_egress" {
   type              = "egress"

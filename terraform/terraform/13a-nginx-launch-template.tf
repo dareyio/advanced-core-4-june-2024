@@ -19,7 +19,7 @@ resource "aws_launch_template" "nginx-launch-template" {
 
   instance_initiated_shutdown_behavior = "terminate"
 
-  instance_type = "t2.micro"
+  instance_type = "t2.large"
 
   key_name = "devops-advanced-class"
 

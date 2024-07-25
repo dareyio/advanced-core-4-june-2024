@@ -17,7 +17,7 @@ resource "aws_launch_template" "wordpress-launch-template" {
   // "ami-0b0af3577fe5e3532"
   instance_initiated_shutdown_behavior = "terminate"
 
-  instance_type = "t2.micro"
+  instance_type = "t2.large"
 
   key_name = "devops-advanced-class"
 

@@ -22,7 +22,7 @@ resource "aws_lb" "internal-alb" {
 resource "aws_lb_target_group" "wordpress-tgt" {
   health_check {
     interval            = 10
-    path                = "/healthstatus"
+    path                = "/"
     protocol            = "HTTP"
     timeout             = 5
     healthy_threshold   = 5
@@ -42,7 +42,7 @@ resource "aws_lb_target_group" "wordpress-tgt" {
 resource "aws_lb_target_group" "tooling-tgt" {
   health_check {
     interval            = 10
-    path                = "/healthstatus"
+    path                = "/"
     protocol            = "HTTP"
     timeout             = 5
     healthy_threshold   = 5
@@ -90,6 +90,18 @@ resource "aws_lb_listener_rule" "tooling-listener" {
 }
 
 
+# Create a new ALB Target Group attachment for Tooling
+resource "aws_autoscaling_attachment" "tooling-alb-asg-attach" {
+  autoscaling_group_name = aws_autoscaling_group.tooling-asg.id
+  lb_target_group_arn    = aws_lb_target_group.tooling-tgt.arn
+  # Explicitly declare dependencies
+  depends_on = [
+    aws_lb_target_group.tooling-tgt,
+    aws_autoscaling_group.tooling-asg,
+  ]
+}
+
+
 # listener rule for Wordpress target
 
 resource "aws_lb_listener_rule" "wordpress-listener" {
@@ -110,7 +122,15 @@ resource "aws_lb_listener_rule" "wordpress-listener" {
 
 
 
-
+resource "aws_autoscaling_attachment" "wordpress-alb-asg-attach" {
+  autoscaling_group_name = aws_autoscaling_group.wordpress-asg.id
+  lb_target_group_arn    = aws_lb_target_group.wordpress-tgt.arn
+  # Explicitly declare dependencies
+  depends_on = [
+    aws_lb_target_group.wordpress-tgt,
+    aws_autoscaling_group.wordpress-asg,
+  ]
+}
 
 
 
